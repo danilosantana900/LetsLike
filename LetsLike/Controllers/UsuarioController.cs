@@ -2,6 +2,7 @@
 using LetsLike.DTO;
 using LetsLike.Interfaces;
 using LetsLike.Models;
+using LetsLike.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace LetsLike.Controllers
         ///     Cria um usuário na base de dados conforme informado no corpo da requisição
         /// </summary>
         /// <remarks>
-        ///     Exemplo:
+        /// Exemplo:
         ///
         ///     POST api/usuario
         ///     { 
@@ -58,13 +59,14 @@ namespace LetsLike.Controllers
                 Nome = value.Nome,
                 Username = value.Username,
                 Email = value.Email,
-                Senha = value.Senha,
+                Senha = Senha.Criptografar(value.Senha),
             };
 
             var response = _usuarioService.SaveOrUpdate(usuario);
 
             if (response != null)
             {
+                response.Senha = Senha.Descriptografar(response.Senha);
                 return Ok(response);
             }
             else
@@ -81,7 +83,7 @@ namespace LetsLike.Controllers
         // GET api/usuario
         /// <summary>
         ///     Busca usuários na base de dados
-        /// </summary>        
+        /// </summary>
         /// <returns>Usuários cadastrados na base de dados</returns>
         /// <response code="200">Retorna lista de usuários</response>
         /// <response code="404">Se não possui cadastros</response>

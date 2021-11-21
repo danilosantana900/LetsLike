@@ -17,16 +17,31 @@ namespace LetsLike.Services
         
         public IList<Usuario> FindAll()
         {
-            return _context.Usuario.ToList();
+            return _context.Usuarios.ToList();
+        }
+
+        public IList<Usuario> FindByEmail(string email)
+        {
+            return _context.Usuarios.Where(x => x.Email == email).ToList();
+        }
+
+        public IList<Usuario> FindByName(string nome)
+        {
+            return _context.Usuarios.Where(x => x.Nome == nome).ToList();
+        }
+
+        public IList<Usuario> FindByUserName(string email)
+        {
+            return _context.Usuarios.Where(x => x.Email == email).ToList();
         }
 
         public Usuario SaveOrUpdate(Usuario usuario)
         {
-            var exist = _context.Usuario.Where(x => x.Id.Equals(usuario.Id)).FirstOrDefault();
+            var exist = _context.Usuarios.Where(x => x.Id.Equals(usuario.Id)).FirstOrDefault();
 
             if (exist == null)
             {
-                _context.Usuario.Add(usuario);
+                _context.Usuarios.Add(usuario);
             }
             else
             {

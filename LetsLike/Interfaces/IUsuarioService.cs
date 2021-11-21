@@ -8,5 +8,11 @@ namespace LetsLike.Interfaces
         Usuario SaveOrUpdate(Usuario usuario);
 
         IList<Usuario> FindAll();
+
+        IList<Usuario> FindByName(string nome);
+
+        IList<Usuario> FindByUserName(string userName);
+
+        IList<Usuario> FindByEmail(string email);
     }
 }

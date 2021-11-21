@@ -6,7 +6,7 @@ namespace LetsLike.Data
 {
     public class LetsLikeContext : DbContext            
     {
-        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Projeto> Projetos { get; set; }
         public DbSet<UsuarioLikeProjeto> UsuariosLikeProjetos { get; set; }
 
