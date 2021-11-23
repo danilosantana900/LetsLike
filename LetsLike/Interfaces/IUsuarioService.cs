@@ -14,5 +14,7 @@ namespace LetsLike.Interfaces
         IList<Usuario> FindByUserName(string userName);
 
         IList<Usuario> FindByEmail(string email);
+
+        bool Login(Usuario usuario);
     }
 }
