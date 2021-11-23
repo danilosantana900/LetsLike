@@ -9,6 +9,7 @@ namespace LetsLike.Configurations
         public static void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IProjetoService, ProjetoService>();
         }
     }
 }

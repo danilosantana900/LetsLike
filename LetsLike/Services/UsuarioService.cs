@@ -2,6 +2,7 @@
 using LetsLike.Interfaces;
 using LetsLike.Models;
 using LetsLike.Utils;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,7 +19,9 @@ namespace LetsLike.Services
         
         public IList<Usuario> FindAll()
         {
-            var result = _context.Usuarios.ToList();
+            var result = _context.Usuarios.Include(x => x.Projeto)
+                            .ThenInclude(j => j.UsuarioCadastro)
+                            .ToList();
 
             foreach (var item in result)
             {
