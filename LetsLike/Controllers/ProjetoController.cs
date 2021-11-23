@@ -42,13 +42,8 @@ namespace LetsLike.Controllers
             var salvarProjeto = _projetoService.SaveOrUpdate(model);
 
             if (salvarProjeto != null)
-            {
-                object res = null;
-                ObjectResult x = new ObjectResult(res);
-                x.StatusCode = 201;
-                // TODO verificar como retornar o objeto que foi salvo com o status code correto.
-                x.Value = salvarProjeto;
-                return Ok(res);
+            {                
+                return Ok(salvarProjeto);
             }
             else
             {

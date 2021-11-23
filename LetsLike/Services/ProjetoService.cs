@@ -2,10 +2,7 @@
 using LetsLike.Interfaces;
 using LetsLike.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LetsLike.Services
 {
@@ -20,7 +17,7 @@ namespace LetsLike.Services
 
         public Projeto LikeProketo(UsuarioLikeProjeto like)
         {
-
+            return new Projeto();
 
 
             /*
