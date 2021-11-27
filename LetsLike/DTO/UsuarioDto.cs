@@ -5,9 +5,11 @@ namespace LetsLike.DTO
     public class UsuarioDto
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [StringLength(80, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 3)]
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [StringLength(80, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 3)]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
@@ -15,9 +17,9 @@ namespace LetsLike.DTO
         public string Email { get; set; }
         
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [StringLength(100, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 6)]
         public string Senha { get; set; }
 
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [Compare("Senha", ErrorMessage = "As senhas não conferem.")]
         public string ConfirmaSenha { get; set; }
     }

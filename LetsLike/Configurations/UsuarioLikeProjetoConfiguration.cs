@@ -10,14 +10,14 @@ namespace LetsLike.Configurations
         {            
             builder.HasKey(x => x.Id);
                      
-            builder.HasOne(fk => fk.UsuarioLike)
-                .WithMany(fk => fk.UsuarioLikeProjeto)
-                .HasForeignKey(fk => fk.IdUsuarioLike)            
+            builder.HasOne(p => p.UsuarioLike)
+                .WithMany(b => b.UsuarioLikeProjeto)
+                .HasForeignKey(p => p.IdUsuarioLike)            
                 .HasConstraintName("FK_USUARIO_USUARIO_LIKE_PROJETO");
                         
-            builder.HasOne(fk => fk.ProjetoLike)
-                .WithMany(fk => fk.ProjetoLikeUsuario)
-                .HasForeignKey(fk => fk.IdProjetoLike)
+            builder.HasOne(p => p.ProjetoLike)
+                .WithMany(b => b.ProjetoLikeUsuario)
+                .HasForeignKey(p => p.IdProjetoLike)
                 .HasConstraintName("FK_PROJETO_USUARIO_LIKE_PROJETO");
         }
     }

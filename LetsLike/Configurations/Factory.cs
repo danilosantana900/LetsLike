@@ -10,6 +10,7 @@ namespace LetsLike.Configurations
         {
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IProjetoService, ProjetoService>();
+            services.AddScoped<IUsuarioLikeProjetoService, UsuarioLikeProjetoService>();
         }
     }
 }

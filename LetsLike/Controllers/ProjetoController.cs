@@ -4,6 +4,8 @@ using LetsLike.Interfaces;
 using LetsLike.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LetsLike.Controllers
 {
@@ -22,6 +24,26 @@ namespace LetsLike.Controllers
             _mapper = mapper;
         }
 
+        // POST api/projeto
+        /// <summary>
+        /// Cria projeto na Base
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     POST api/projeto
+        ///     { 
+        ///        "nome": "React",
+        ///        "URL": "www.react.com.br",
+        ///        "Imagem": "",
+        ///        "IdUsuarioCadastro": "1"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="value"></param>
+        /// <returns>Projeto inserido na base</returns>
+        /// <response code="201">Retorna o novo item criado</response>
+        /// <response code="400">Se o item não for criado</response>   
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -56,16 +78,75 @@ namespace LetsLike.Controllers
             }
         }
 
+        // PATCH api/projeto
+        /// <summary>
+        /// Da like no projeto vinculando a USUARIOLIKEPROJETO e acrescentando +1 no contador
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     PATCH api/projeto
+        ///     { 
+        ///        "idUsuarioLikeProjeto": "1",
+        ///        "idProjetoLikeUsuario": "1",
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="value"></param>
+        /// <returns>Like inserido na base</returns>
+        /// <response code="201">Retorna o novo item criado</response>
+        /// <response code="400">Se o item não for criado</response>  
         [HttpPatch]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<ProjetoDto> Patch([FromBody] ProjetoDto value)
+        public ActionResult<Projeto> Patch([FromBody] UsuarioLikeProjetoDto value)
         {
-            // TODO inserir o LIKEDOPROJETO 
-            // quando ele disparar o método de LIKE que deverá ser construido
-            // dentro da service de projeto
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            return Ok();
+            var usuarioLikeProjeto = new UsuarioLikeProjeto
+            {
+                IdProjetoLike = value.IdProjetoLike,
+                IdUsuarioLike = value.IdUsuarioLike,
+            };
+
+            var registryUser = _projetoService.LikeProjeto(usuarioLikeProjeto);
+
+            if (registryUser > 0)
+            {
+                return Ok(registryUser);
+            }
+            else
+            {
+                object res = null;
+                NotFoundObjectResult notfound = new NotFoundObjectResult(res);
+                notfound.StatusCode = 400;
+                notfound.Value = "Erro ao cadastrar Usuário!";
+                return NotFound(notfound);
+            }
+        }
+
+        // GET api/projeto
+        /// <summary>
+        /// Retorna todos os projetos cadastrados
+        /// </summary>        
+        /// <response code="200">Retorna a Lista de Projeto</response>
+        /// <response code="400">Se não encontrar nenhum resultado</response>  
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<IList<Usuario>> Get()
+        {
+            var projetos = _projetoService.GetAll();
+            
+            if (projetos != null)
+            {
+                return Ok(projetos.Select(x => _mapper.Map<Projeto>(x)).ToList());
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }

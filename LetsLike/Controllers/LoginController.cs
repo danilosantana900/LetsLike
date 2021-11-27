@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using LetsLike.DTO;
 using LetsLike.Interfaces;
-using LetsLike.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,17 +29,28 @@ namespace LetsLike.Controllers
         /// <response code="404">Se email/senha não conferem</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult Login([FromBody] Usuario value)
+        public ActionResult<bool> Login([FromBody] LoginDto value)
         {
-            if (_usuarioService.Login(value))
+            const string msgNotFound = "Dados email/senha não conferem!";
+
+
+            if (!ModelState.IsValid)
             {
-                return Ok("Usuário Cadastrado");
+                return BadRequest(ModelState);
             }
-            else
+
+            var user = _usuarioService.FindByUserName(value.Username);
+
+            if (user == null)
             {
-                return NotFound("Dados email/senha não conferem");
+                return NotFound(msgNotFound);
             }
+
+            var verify = _usuarioService.VerifyPassword(value.Senha, user.Id);
+
+            return verify ? Ok(verify) : NotFound(msgNotFound);            
         }
     }
 }

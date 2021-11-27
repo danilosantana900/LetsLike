@@ -1,11 +1,13 @@
 ﻿using LetsLike.Models;
+using System.Collections.Generic;
 
 namespace LetsLike.Interfaces
 {
     public interface IProjetoService
     {
         Projeto SaveOrUpdate(Projeto projeto);
-
-        Projeto LikeProketo(UsuarioLikeProjeto like);
+        int LikeProjeto(UsuarioLikeProjeto model);
+        IList<Projeto> GetByUsuario(int idUsuario);
+        IList<Projeto> GetAll();
     }
 }

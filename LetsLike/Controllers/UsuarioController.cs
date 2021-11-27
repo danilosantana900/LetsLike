@@ -49,7 +49,7 @@ namespace LetsLike.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Usuario> Post([FromBody] UsuarioDto value)
+        public ActionResult<UsuarioDto> Post([FromBody] UsuarioDto value)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -80,13 +80,31 @@ namespace LetsLike.Controllers
             }
         }
 
-        // GET api/usuario
+        // GET api/usuarios
         /// <summary>
-        ///     Busca usuários na base de dados
+        /// Retorna todos os usúarios na base
         /// </summary>
-        /// <returns>Usuários cadastrados na base de dados</returns>
-        /// <response code="200">Retorna lista de usuários</response>
-        /// <response code="404">Se não possui cadastros</response>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     GET api/usuario
+        ///     { 
+        ///        "nome": "Maria da Silva",
+        ///        "email": "mariasilva@provedor.com",
+        ///        "username": "mariasilva",
+        ///        "senha": "silva123",        
+        ///        "projetos: [
+        ///        
+        ///        ]
+        ///        "usuarioLikeProjeto":[
+        ///        
+        ///        ]
+        ///     }
+        ///
+        /// </remarks>
+        /// <returns>Usuário inserido na base</returns>
+        /// <response code="200">Retorna os usuários cadastrados na base</response>
+        /// <response code="404">Retorna se  usuario não for encontrado</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

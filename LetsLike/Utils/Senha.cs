@@ -59,5 +59,21 @@ namespace LetsLike.Utils
                 }
             }
         }
+
+        private static string Decrypt(string valueDecrypt)
+        {
+            Byte[] b = Convert.FromBase64String(valueDecrypt);
+
+            string decryptedConnection = System.Text.ASCIIEncoding.ASCII.GetString(b);
+            return decryptedConnection;
+        }
+
+        private static string Encrypt(string valueEncrypt)
+        {
+            Byte[] b = System.Text.ASCIIEncoding.ASCII.GetBytes(valueEncrypt);
+
+            string encryptedConnection = Convert.ToBase64String(b);
+            return encryptedConnection;
+        }
     }
 }

@@ -2,18 +2,13 @@
 
 namespace LetsLike.DTO
 {
-    public class ProjetoDto
+    public class LoginDto
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(80, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 3)]
-        public string Nome { get; set; }
+        public string Username { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public string URL { get; set; }
-        
-        public string Imagem { get; set; }
-
-        [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public int IdUsuarioCadastro { get; set; }
+        public string Senha { get; set; }
     }
 }

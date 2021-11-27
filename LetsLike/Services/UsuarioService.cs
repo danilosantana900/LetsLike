@@ -3,6 +3,7 @@ using LetsLike.Interfaces;
 using LetsLike.Models;
 using LetsLike.Utils;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +11,7 @@ namespace LetsLike.Services
 {
     public class UsuarioService : IUsuarioService
     {
-        public LetsLikeContext _context;
+        private readonly LetsLikeContext _context;
 
         public UsuarioService(LetsLikeContext context)
         {
@@ -31,9 +32,9 @@ namespace LetsLike.Services
             return result;
         }
 
-        public IList<Usuario> FindByEmail(string email)
+        public Usuario FindByEmail(string email)
         {
-            return _context.Usuarios.Where(x => x.Email == email).ToList();
+            return _context.Usuarios.Where(x => x.Email == email).FirstOrDefault();
         }
 
         public IList<Usuario> FindByName(string nome)
@@ -41,16 +42,32 @@ namespace LetsLike.Services
             return _context.Usuarios.Where(x => x.Nome == nome).ToList();
         }
 
-        public IList<Usuario> FindByUserName(string email)
+        public Usuario FindByUserName(string userName)
         {
-            return _context.Usuarios.Where(x => x.Email == email).ToList();
+            return _context.Usuarios.Where(x => x.Username == userName).FirstOrDefault();
         }
 
-        public bool Login(Usuario usuario)
+        public bool VerifyPassword(string senha, int idUsuario)
         {
-            var encontrado = _context.Usuarios.Where(x => x.Email == usuario.Email && x.Senha == Senha.Criptografar(usuario.Senha)).FirstOrDefault();
+            try
+            {
+                var find = _context.Usuarios.Where(x => x.Id == idUsuario).FirstOrDefault();
 
-            return encontrado != null;
+                if (find != null)
+                {
+                    var senhaDB = Senha.Descriptografar(find.Senha);
+
+                    return senhaDB.Equals(senha);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public Usuario SaveOrUpdate(Usuario usuario)

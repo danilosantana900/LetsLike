@@ -11,10 +11,10 @@ namespace LetsLike.Interfaces
 
         IList<Usuario> FindByName(string nome);
 
-        IList<Usuario> FindByUserName(string userName);
+        Usuario FindByUserName(string userName);
 
-        IList<Usuario> FindByEmail(string email);
+        Usuario FindByEmail(string email);
 
-        bool Login(Usuario usuario);
+        bool VerifyPassword(string senha, int idusuario);
     }
 }
