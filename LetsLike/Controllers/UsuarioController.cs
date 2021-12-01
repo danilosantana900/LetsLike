@@ -3,6 +3,7 @@ using LetsLike.DTO;
 using LetsLike.Interfaces;
 using LetsLike.Models;
 using LetsLike.Utils;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace LetsLike.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [EnableCors("CorsPolicyLetsCode")]
     [ApiController]
     // [Autorize]
     public class UsuarioController : ControllerBase

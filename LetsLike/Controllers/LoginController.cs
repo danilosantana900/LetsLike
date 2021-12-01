@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LetsLike.DTO;
 using LetsLike.Interfaces;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace LetsLike.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
+    [EnableCors("ACorsPolicyLetsCode")]
     [ApiController]
     public class LoginController : ControllerBase
     {

@@ -48,6 +48,17 @@ namespace LetsLike
                 c.IncludeXmlComments(xmlPath);
             });
 
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicyLetsCode", builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    /*.SetIsOriginAllowed(origin => true) // allow any origin
+                        .AllowCredentials()*/
+                    );
+            });
+
             RegisterServicesPrivate(services);
         }
 
@@ -60,12 +71,14 @@ namespace LetsLike
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LetsLike v1"));
             }
-
+                        
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("CorsPolicyLetsCode");
 
             app.UseEndpoints(endpoints =>
             {
