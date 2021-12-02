@@ -9,7 +9,7 @@ namespace LetsLike.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    [EnableCors("ACorsPolicyLetsCode")]
+    [EnableCors("CorsPolicyLetsCode")]
     [ApiController]
     public class LoginController : ControllerBase
     {
