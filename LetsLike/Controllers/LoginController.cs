@@ -35,7 +35,7 @@ namespace LetsLike.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<bool> Login([FromBody] LoginDto value)
         {
-            const string msgNotFound = "Dados email/senha não conferem!";
+            const string msgNotFound = "Dados username/senha não conferem!";
 
 
             if (!ModelState.IsValid)

@@ -56,6 +56,11 @@ namespace LetsLike.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var usuarioMesmoUsername = _usuarioService.FindByUserName(value.Username);
+
+            if (usuarioMesmoUsername != null)
+                return BadRequest("Username não está disponivel!");
+            
             var usuario = new Usuario
             {
                 Nome = value.Nome,
