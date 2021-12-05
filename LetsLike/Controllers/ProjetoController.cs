@@ -137,7 +137,7 @@ namespace LetsLike.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IList<Projeto>> Get()
+        public ActionResult<IList<ProjetoDto>> Get()
         {
             var projetos = _projetoService.GetAll();
             
