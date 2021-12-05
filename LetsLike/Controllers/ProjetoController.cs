@@ -137,13 +137,37 @@ namespace LetsLike.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IList<Usuario>> Get()
+        public ActionResult<IList<Projeto>> Get()
         {
             var projetos = _projetoService.GetAll();
             
             if (projetos != null)
             {
                 return Ok(projetos.Select(x => _mapper.Map<Projeto>(x)).ToList());
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        // GET api/projeto/id
+        /// <summary>
+        /// Retorna projeto cadastrado pelo ID
+        /// </summary>        
+        /// <response code="200">Retorna Projeto</response>
+        /// <response code="400">Se não encontrar nenhum resultado</response>  
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Projeto> GetById([FromRoute] int id)
+        {
+            var projeto = _projetoService.GetById(id);
+
+            if (projeto != null)
+            {
+                return Ok(_mapper.Map<Projeto>(projeto));
             }
             else
             {

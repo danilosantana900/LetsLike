@@ -24,6 +24,11 @@ namespace LetsLike.Services
             return _context.Projetos.ToList();
         }
 
+        public Projeto GetById(int idProjeto)
+        {
+            return _context.Projetos.Where(x => x.Id.Equals(idProjeto)).FirstOrDefault();
+        }
+
         public IList<Projeto> GetByUsuario(int idUsuario)
         {
             return _context.Projetos.Where(x => x.Id.Equals(idUsuario)).ToList();
